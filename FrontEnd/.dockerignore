@@ -1,0 +1,16 @@
+node_modules
+.next
+out
+*.log
+
+# Local env
+.env
+.env.*
+
+# VCS / editor
+.git
+.gitignore
+.vscode
+
+# Misc
+README.md
