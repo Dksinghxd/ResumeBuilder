@@ -103,24 +103,24 @@ jobs:
           tags: |
             docker.io/${{ secrets.DOCKERHUB_USERNAME }}/resume-builder-frontend:latest
 
-deploy:
-  name: Deploy
-  needs:
-    - docker
-  if: github.ref == 'refs/heads/main'
-  runs-on: ubuntu-latest
-  steps:
-    - name: Deploy to Server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.DEPLOY_HOST }}
-        username: ${{ secrets.DEPLOY_USERNAME }}
-        key: ${{ secrets.DEPLOY_SSH_KEY }}
-        script: |
-          cd /opt/resume-builder
+  deploy:
+    name: Deploy
+    needs:
+      - docker
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USERNAME }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          script: |
+            cd /opt/resume-builder
 
-          docker pull docker.io/${{ secrets.DOCKERHUB_USERNAME }}/resume-builder-backend:latest
-          docker pull docker.io/${{ secrets.DOCKERHUB_USERNAME }}/resume-builder-frontend:latest
+            docker pull docker.io/${{ secrets.DOCKERHUB_USERNAME }}/resume-builder-backend:latest
+            docker pull docker.io/${{ secrets.DOCKERHUB_USERNAME }}/resume-builder-frontend:latest
 
-          docker compose down
-          docker compose up -d
+            docker compose down
+            docker compose up -d
