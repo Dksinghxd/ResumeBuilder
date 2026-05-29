@@ -211,10 +211,8 @@ jobs:
     needs: [setup, build-and-push-docker, scan-images]
     if: needs.setup.outputs.run_deploy == 'true'
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ needs.setup.outputs.deploy_env }}
-      url: ${{ secrets.DEPLOY_HOST_URL }}
-    env:
+  environment: ${{ needs.setup.outputs.deploy_env }}
+  env:
       DOCKER_COMPOSE_DEPLOY_YML: |
         services:
           mongo:
